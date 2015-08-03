@@ -22,12 +22,27 @@ var tagbox = {
      * @var strict bool An option to set the sole use of pre-defined tags
      */
     target    : null,
-    width     : "100%",
-    height    : "37px",
     tagIndex  : 0,
     inputName : "tags",
     preset    : [],
     strict    : false,
+
+    inputDefaults : {
+        id       : "tagbox-content-area",
+        outline  : "0px solid transparent",
+        width    : "100%",
+        height   : "37px",
+        cssFloat : "left",
+        border   : "thin solid #c9c9c9",
+        padding  : "4px"
+    },
+
+    outputDefaults : {
+        id       : "tagbox-content-output",
+        cssFloat : "left",
+        width    : "100%",
+        position : "relative"
+    },
 
     /**
      * init starts off the process by creating the needed
@@ -58,10 +73,11 @@ var tagbox = {
     createOutputArea : function() {
         var output = document.createElement("div");
         if (output != null) {
-            output.id             = "tagbox-content-output";
-            output.style.cssFloat = "left";
-            output.style.width    = "100%";
-            output.style.position = "relative";
+
+            output.id             = this.outputDefaults.id;
+            output.style.cssFloat = this.outputDefaults.cssFloat;
+            output.style.width    = this.outputDefaults.width;
+            output.style.position = this.outputDefaults.position;
 
             this.target.appendChild(output);
         }
@@ -80,13 +96,13 @@ var tagbox = {
         var input = document.createElement("div");
 
         input.contentEditable = true;
-        input.style.outline   = "0px solid transparent";
-        input.style.width     = this.width;
-        input.id              = "tagbox-content-area";
-        input.style.cssFloat  = "left";
-        input.style.border    = "thin solid #c9c9c9";
-        input.style.height    = this.height;
-        input.style.padding        = "4px";
+        input.style.outline   = this.inputDefaults.outline;
+        input.style.width     = this.inputDefaults.width;
+        input.id              = this.inputDefaults.id;
+        input.style.cssFloat  = this.inputDefaults.cssFloat;
+        input.style.border    = this.inputDefaults.border;
+        input.style.height    = this.inputDefaults.height;
+        input.style.padding   = this.inputDefaults.padding;
 
         input.addEventListener('keydown', function (e) {
             tagbox.detectKeyPress(e);
