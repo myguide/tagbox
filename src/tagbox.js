@@ -15,9 +15,8 @@
 var tagbox = {
     /**
      * @var target null Target element for the tag dialog
-     * @var width string The initial width of the text box
-     * @var height string The initial height of the text box
      * @var tagIndex int The index count for each tag
+     * @var inputName string the default set of input names for tags
      * @var preset array An optional list of tags to be pre-defined
      * @var strict bool An option to set the sole use of pre-defined tags
      */
@@ -29,20 +28,34 @@ var tagbox = {
 
     inputDefaults : {
         id       : "tagbox-content-area",
-        outline  : "0px solid transparent",
         width    : "100%",
         height   : "37px",
         cssFloat : "left",
         border   : "thin solid #c9c9c9",
-        padding  : "4px"
+        padding  : "4px",
+        outline  : "0px solid transparent"
     },
 
     outputDefaults : {
         id       : "tagbox-content-output",
-        cssFloat : "left",
+        position : "relative",
         width    : "100%",
-        position : "relative"
+        cssFloat : "left"
     },
+
+    tagDefaults : {
+        id           : "tagbox-tag-" + this.tagIndex,
+        display      : "inline",
+        height       : "30px",
+        cssFloat     : "left",
+        margin       : "3px",
+        padding      : "4px",
+        border       : "thin solid #CBD8F2",
+        borderRadius : "5px",
+        background   : "#DEE7F7",
+        color        : "#666666"
+    },
+
 
     /**
      * init starts off the process by creating the needed
@@ -55,8 +68,10 @@ var tagbox = {
      */
     init : function(e) {
         this.target = document.getElementById(e);
-        this.createOutputArea();
-        this.createInputArea();
+        if (this.target != null) {
+            this.createOutputArea();
+            this.createInputArea();
+        }
     },
 
     /**
@@ -72,15 +87,13 @@ var tagbox = {
      */
     createOutputArea : function() {
         var output = document.createElement("div");
-        if (output != null) {
 
-            output.id             = this.outputDefaults.id;
-            output.style.cssFloat = this.outputDefaults.cssFloat;
-            output.style.width    = this.outputDefaults.width;
-            output.style.position = this.outputDefaults.position;
+        output.id             = this.outputDefaults.id;
+        output.style.position = this.outputDefaults.position;
+        output.style.width    = this.outputDefaults.width;
+        output.style.cssFloat = this.outputDefaults.cssFloat;
 
-            this.target.appendChild(output);
-        }
+        this.target.appendChild(output);
     },
 
     /**
@@ -96,13 +109,14 @@ var tagbox = {
         var input = document.createElement("div");
 
         input.contentEditable = true;
-        input.style.outline   = this.inputDefaults.outline;
-        input.style.width     = this.inputDefaults.width;
-        input.id              = this.inputDefaults.id;
-        input.style.cssFloat  = this.inputDefaults.cssFloat;
-        input.style.border    = this.inputDefaults.border;
-        input.style.height    = this.inputDefaults.height;
-        input.style.padding   = this.inputDefaults.padding;
+
+        input.id             = this.inputDefaults.id;
+        input.style.width    = this.inputDefaults.width;
+        input.style.height   = this.inputDefaults.height;
+        input.style.cssFloat = this.inputDefaults.cssFloat;
+        input.style.border   = this.inputDefaults.border;
+        input.style.padding  = this.inputDefaults.padding;
+        input.style.outline  = this.inputDefaults.outline;     
 
         input.addEventListener('keydown', function (e) {
             tagbox.detectKeyPress(e);
@@ -145,17 +159,18 @@ var tagbox = {
         var output = document.getElementById("tagbox-content-output");
 
         var tag = document.createElement("div");
-            tag.style.background   = "#DEE7F7";
-            tag.style.color        = "#666666";
-            tag.style.border       = "thin solid #CBD8F2";
-            tag.style.display      = "inline";
-            tag.style.margin       = "3px";
-            tag.style.padding      = "4px";
-            tag.style.borderRadius = "5px";
-            tag.style.height       = "30px;"
-            tag.style.cssFloat     = "left";
-            tag.id                 = "tagbox-tag-" + this.tagIndex;
-            tag.innerHTML          = word;
+            tag.id                 = this.tagDefaults.id,
+            tag.style.display      = this.tagDefaults.display;
+            tag.style.height       = this.tagDefaults.height;
+            tag.style.cssFloat     = this.tagDefaults.cssFloat;
+            tag.style.margin       = this.tagDefaults.margin;
+            tag.style.padding      = this.tagDefaults.padding;
+            tag.style.border       = this.tagDefaults.border;
+            tag.style.borderRadius = this.tagDefaults.borderRadius;
+            tag.style.background   = this.tagDefaults.background;
+            tag.style.color        = this.tagDefaults.color;
+
+            tag.innerHTML = word;
 
         output.appendChild(tag);
         this.createHiddenInput(word);
