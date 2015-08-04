@@ -49,6 +49,7 @@ var tagbox =
         cssFloat   : "left",
         border     : "thin solid #c9c9c9",
         padding    : "4px",
+        paddingTop : "10px",
         outline    : "0px solid transparent",
         color      : "#444444",
         fontFamily : "Helvetica"
@@ -62,7 +63,8 @@ var tagbox =
         cssFloat     : "left",
         padding      : "4px",
         border       : "thin solid #c9c9c9",
-        borderBottom : "none"
+        borderBottom : "none",
+        display      : "none"
     },
 
     tagDefaults :
@@ -121,7 +123,8 @@ var tagbox =
         output.style.padding      = this.outputDefaults.padding;
         output.style.border       = this.outputDefaults.border;
         output.style.borderBottom = this.outputDefaults.borderBottom;
-        output.style.display  = "none";
+        output.style.display      = this.outputDefaults.display;
+
         this.target.appendChild(output);
     },
 
@@ -146,7 +149,7 @@ var tagbox =
         input.style.cssFloat   = this.inputDefaults.cssFloat;
         input.style.border     = this.inputDefaults.border;
         input.style.padding    = this.inputDefaults.padding;
-        input.style.paddingTop = "10px";
+        input.style.paddingTop = this.inputDefaults.paddingTop;
         input.style.outline    = this.inputDefaults.outline;
         input.style.color      = this.inputDefaults.color;
         input.style.fontFamily = this.inputDefaults.fontFamily;  
