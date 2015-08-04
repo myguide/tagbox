@@ -27,33 +27,38 @@ var tagbox = {
     strict    : false,
 
     inputDefaults : {
-        id       : "tagbox-content-area",
-        width    : "100%",
-        height   : "37px",
-        cssFloat : "left",
-        border   : "thin solid #c9c9c9",
-        padding  : "4px",
-        outline  : "0px solid transparent"
+        id         : "tagbox-content-area",
+        width      : "100%",
+        height     : "37px",
+        cssFloat   : "left",
+        border     : "thin solid #c9c9c9",
+        padding    : "4px",
+        outline    : "0px solid transparent",
+        color      : "#444444",
+        fontFamily : "Helvetica"
     },
 
     outputDefaults : {
         id       : "tagbox-content-output",
         position : "relative",
         width    : "100%",
-        cssFloat : "left"
+        cssFloat : "left",
+        padding  : "4px",
+        border   : "thin solid #c9c9c9"
     },
 
     tagDefaults : {
         id           : "tagbox-tag-" + this.tagIndex,
         display      : "inline",
-        height       : "30px",
+        height       : "18px",
         cssFloat     : "left",
         margin       : "3px",
         padding      : "4px",
         border       : "thin solid #CBD8F2",
         borderRadius : "5px",
         background   : "#DEE7F7",
-        color        : "#666666"
+        color        : "#666666",
+        fontFamily   : "Helvetica"
     },
 
 
@@ -92,7 +97,9 @@ var tagbox = {
         output.style.position = this.outputDefaults.position;
         output.style.width    = this.outputDefaults.width;
         output.style.cssFloat = this.outputDefaults.cssFloat;
-
+        output.style.border   = this.outputDefaults.border;
+        output.style.padding  = this.outputDefaults.padding;
+        output.style.display  = "none";
         this.target.appendChild(output);
     },
 
@@ -110,13 +117,15 @@ var tagbox = {
 
         input.contentEditable = true;
 
-        input.id             = this.inputDefaults.id;
-        input.style.width    = this.inputDefaults.width;
-        input.style.height   = this.inputDefaults.height;
-        input.style.cssFloat = this.inputDefaults.cssFloat;
-        input.style.border   = this.inputDefaults.border;
-        input.style.padding  = this.inputDefaults.padding;
-        input.style.outline  = this.inputDefaults.outline;     
+        input.id               = this.inputDefaults.id;
+        input.style.width      = this.inputDefaults.width;
+        input.style.height     = this.inputDefaults.height;
+        input.style.cssFloat   = this.inputDefaults.cssFloat;
+        input.style.border     = this.inputDefaults.border;
+        input.style.padding    = this.inputDefaults.padding;
+        input.style.outline    = this.inputDefaults.outline;
+        input.style.color      = this.inputDefaults.color;
+        input.style.fontFamily = this.inputDefaults.fontFamily;  
 
         input.addEventListener('keydown', function (e) {
             tagbox.detectKeyPress(e);
@@ -154,10 +163,14 @@ var tagbox = {
         var contentArea = document.getElementById("tagbox-content-area");
         var content        = contentArea.textContent;
 
-        if (this.validateTagContent(content) == true) {
+        if (this.validateTagContent(content) === true) {
             contentArea.textContent = "";
 
             var output = document.getElementById("tagbox-content-output");
+
+            if (output.style.display == "none") {
+                output.style.display = "block";
+            }
 
             var tag = document.createElement("div");
                 tag.id                 = this.tagDefaults.id;
@@ -170,6 +183,7 @@ var tagbox = {
                 tag.style.borderRadius = this.tagDefaults.borderRadius;
                 tag.style.background   = this.tagDefaults.background;
                 tag.style.color        = this.tagDefaults.color;
+                tag.style.fontFamily   = this.tagDefaults.fontFamily;
 
                 tag.innerHTML = content.trim();
 
@@ -188,7 +202,7 @@ var tagbox = {
      */
     validateTagContent : function(content) {
         var noSpace = content.trim();
-        if (noSpace != "") {
+        if (noSpace !== "") {
             return true;
         }
         return false;

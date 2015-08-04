@@ -33,27 +33,32 @@ var tagbox = {
         cssFloat: "left",
         border: "thin solid #c9c9c9",
         padding: "4px",
-        outline: "0px solid transparent"
+        outline: "0px solid transparent",
+        color: "#444444",
+        fontFamily: "Helvetica"
     },
 
     outputDefaults: {
         id: "tagbox-content-output",
         position: "relative",
         width: "100%",
-        cssFloat: "left"
+        cssFloat: "left",
+        padding: "4px",
+        border: "thin solid #c9c9c9"
     },
 
     tagDefaults: {
         id: "tagbox-tag-" + this.tagIndex,
         display: "inline",
-        height: "30px",
+        height: "18px",
         cssFloat: "left",
         margin: "3px",
         padding: "4px",
         border: "thin solid #CBD8F2",
         borderRadius: "5px",
         background: "#DEE7F7",
-        color: "#666666"
+        color: "#666666",
+        fontFamily: "Helvetica"
     },
 
 
@@ -92,7 +97,9 @@ var tagbox = {
         output.style.position = this.outputDefaults.position;
         output.style.width = this.outputDefaults.width;
         output.style.cssFloat = this.outputDefaults.cssFloat;
-
+        output.style.border = this.outputDefaults.border;
+        output.style.padding = this.outputDefaults.padding;
+        output.style.display = "none";
         this.target.appendChild(output);
     },
 
@@ -117,6 +124,8 @@ var tagbox = {
         input.style.border = this.inputDefaults.border;
         input.style.padding = this.inputDefaults.padding;
         input.style.outline = this.inputDefaults.outline;
+        input.style.color = this.inputDefaults.color;
+        input.style.fontFamily = this.inputDefaults.fontFamily;
 
         input.addEventListener('keydown', function(e) {
             tagbox.detectKeyPress(e);
@@ -152,28 +161,51 @@ var tagbox = {
      */
     appendTag: function() {
         var contentArea = document.getElementById("tagbox-content-area");
-        var word = contentArea.textContent;
+        var content = contentArea.textContent;
 
-        contentArea.textContent = "";
+        if (this.validateTagContent(content) === true) {
+            contentArea.textContent = "";
 
-        var output = document.getElementById("tagbox-content-output");
+            var output = document.getElementById("tagbox-content-output");
 
-        var tag = document.createElement("div");
-        tag.id = this.tagDefaults.id;
-        tag.style.display = this.tagDefaults.display;
-        tag.style.height = this.tagDefaults.height;
-        tag.style.cssFloat = this.tagDefaults.cssFloat;
-        tag.style.margin = this.tagDefaults.margin;
-        tag.style.padding = this.tagDefaults.padding;
-        tag.style.border = this.tagDefaults.border;
-        tag.style.borderRadius = this.tagDefaults.borderRadius;
-        tag.style.background = this.tagDefaults.background;
-        tag.style.color = this.tagDefaults.color;
+            if (output.style.display == "none") {
+                output.style.display = "block";
+            }
 
-        tag.innerHTML = word;
+            var tag = document.createElement("div");
+            tag.id = this.tagDefaults.id;
+            tag.style.display = this.tagDefaults.display;
+            tag.style.height = this.tagDefaults.height;
+            tag.style.cssFloat = this.tagDefaults.cssFloat;
+            tag.style.margin = this.tagDefaults.margin;
+            tag.style.padding = this.tagDefaults.padding;
+            tag.style.border = this.tagDefaults.border;
+            tag.style.borderRadius = this.tagDefaults.borderRadius;
+            tag.style.background = this.tagDefaults.background;
+            tag.style.color = this.tagDefaults.color;
+            tag.style.fontFamily = this.tagDefaults.fontFamily;
 
-        output.appendChild(tag);
-        this.createHiddenInput(word);
+            tag.innerHTML = content.trim();
+
+            output.appendChild(tag);
+            this.createHiddenInput(content);
+        }
+    },
+
+    /**
+     * validateTagContent makes sure that empty spaces and
+     * otherwise blank tags are not added.
+     *
+     * @param content string The tag content
+     *
+     * @return bool
+     */
+    validateTagContent: function(content) {
+        var noSpace = content.trim();
+        if (noSpace !== "") {
+            return true;
+        }
+        return false;
     },
 
     /**
