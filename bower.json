@@ -1,0 +1,27 @@
+{
+  "name": "tagbox",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/myguide/tagbox.git"
+  },
+  "main" : [
+    "dist/tagbox.min.js"
+  ],
+  "homepage": "https://github.com/myguide/tagbox",
+  "authors": [
+    "Harry Lawrence <hazbo@gmx.com>"
+  ],
+  "description": "A simple way to add tags to a form with zero dependencies",
+  "keywords": [
+    "tagbox",
+    "tags",
+    "tag",
+    "box",
+    "input"
+  ],
+  "ignore" : [
+    "node_modules"
+  ],
+  "license": "MIT"
+}
