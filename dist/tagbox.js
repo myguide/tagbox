@@ -30,7 +30,7 @@ var tagbox = {
     inputDefaults: {
         id: "tagbox-content-area",
         width: "100%",
-        height: "37px",
+        height: "24px",
         cssFloat: "left",
         border: "thin solid #c9c9c9",
         padding: "4px",
@@ -45,7 +45,8 @@ var tagbox = {
         width: "100%",
         cssFloat: "left",
         padding: "4px",
-        border: "thin solid #c9c9c9"
+        border: "thin solid #c9c9c9",
+        borderBottom: "none"
     },
 
     tagDefaults: {
@@ -58,8 +59,9 @@ var tagbox = {
         border: "thin solid #CBD8F2",
         borderRadius: "5px",
         background: "#DEE7F7",
-        color: "#666666",
-        fontFamily: "Helvetica"
+        color: "#444444",
+        fontFamily: "Helvetica",
+        fontWeight: "lighter"
     },
 
 
@@ -98,8 +100,9 @@ var tagbox = {
         output.style.position = this.outputDefaults.position;
         output.style.width = this.outputDefaults.width;
         output.style.cssFloat = this.outputDefaults.cssFloat;
-        output.style.border = this.outputDefaults.border;
         output.style.padding = this.outputDefaults.padding;
+        output.style.border = this.outputDefaults.border;
+        output.style.borderBottom = this.outputDefaults.borderBottom;
         output.style.display = "none";
         this.target.appendChild(output);
     },
@@ -124,6 +127,7 @@ var tagbox = {
         input.style.cssFloat = this.inputDefaults.cssFloat;
         input.style.border = this.inputDefaults.border;
         input.style.padding = this.inputDefaults.padding;
+        input.style.paddingTop = "10px";
         input.style.outline = this.inputDefaults.outline;
         input.style.color = this.inputDefaults.color;
         input.style.fontFamily = this.inputDefaults.fontFamily;
@@ -185,6 +189,7 @@ var tagbox = {
             tag.style.background = this.tagDefaults.background;
             tag.style.color = this.tagDefaults.color;
             tag.style.fontFamily = this.tagDefaults.fontFamily;
+            tag.style.fontWeight = this.tagDefaults.fontWeight;
             tag.style.cursor = "pointer";
 
             tag.innerHTML = content.trim();
