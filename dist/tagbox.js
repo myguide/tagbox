@@ -22,6 +22,7 @@ var tagbox = {
      */
     target: null,
     tagIndex: 0,
+    tagCount: 0,
     inputName: "tags",
     preset: [],
     strict: false,
@@ -48,7 +49,7 @@ var tagbox = {
     },
 
     tagDefaults: {
-        id: "tagbox-tag-" + this.tagIndex,
+        //id           : "tagbox-tag-" + this.tagIndex,
         display: "inline",
         height: "18px",
         cssFloat: "left",
@@ -173,7 +174,7 @@ var tagbox = {
             }
 
             var tag = document.createElement("div");
-            tag.id = this.tagDefaults.id;
+            tag.id = "tagbox-tag-" + this.tagIndex;
             tag.style.display = this.tagDefaults.display;
             tag.style.height = this.tagDefaults.height;
             tag.style.cssFloat = this.tagDefaults.cssFloat;
@@ -184,8 +185,13 @@ var tagbox = {
             tag.style.background = this.tagDefaults.background;
             tag.style.color = this.tagDefaults.color;
             tag.style.fontFamily = this.tagDefaults.fontFamily;
+            tag.style.cursor = "pointer";
 
             tag.innerHTML = content.trim();
+
+            tag.addEventListener("click", function(e) {
+                tagbox.removeTag(e);
+            });
 
             output.appendChild(tag);
             this.createHiddenInput(content);
@@ -209,6 +215,36 @@ var tagbox = {
     },
 
     /**
+     * removeTag removes both the hidden input attached to
+     * the tag that has been created, and the tag div element
+     * also.
+     *
+     * @param e onclick Event for clocking on a tag
+     *
+     * @return null
+     */
+    removeTag: function(e) {
+        if (e.target.parentNode) {
+            e.target.parentNode.removeChild(e.target);
+        }
+
+        var tagId = e.target.id.replace("tagbox-tag-", "");
+        var tagInput = document.getElementById("tagbox-input-" + tagId);
+        if (tagInput.parentNode) {
+            tagInput.parentNode.removeChild(tagInput);
+        }
+
+        this.tagCount--;
+
+        // TODO: This shoud be seperated from this method
+        if (this.tagCount === 0) {
+            // TODO: Stop getting this from getByElementId
+            var output = document.getElementById("tagbox-content-output");
+            output.style.display = "none";
+        }
+    },
+
+    /**
      * createHiddenInput creates the input(s) used to send the tag values
      * as form data to the server. This is done using the tagIndex along with
      * a given input name which can be set manually but defaults to 'tags'.
@@ -221,9 +257,11 @@ var tagbox = {
         var inputValue = document.createElement("input");
         inputValue.type = "hidden";
         inputValue.name = this.inputName + "[" + this.tagIndex + "]";
+        inputValue.id = "tagbox-input-" + this.tagIndex;
         inputValue.value = tag;
 
         this.target.appendChild(inputValue);
         this.tagIndex++;
+        this.tagCount++;
     }
 };
