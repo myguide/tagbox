@@ -7,6 +7,8 @@ recommend using it just yet.
 
 You can check out [a demo here](https://jsfiddle.net/o4cc8cnd/2/).
 
+![tagbox](https://raw.githubusercontent.com/myguide/tagbox/master/images/demo.png)
+
 ### Usage
 This IS going to change! But for now it can be used like this:
 
