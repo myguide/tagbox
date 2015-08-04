@@ -5,6 +5,8 @@ that allows you to create "tag like" inputs for your forms. This is
 still in the very VERY early stages of development, so I would not
 recommend using it just yet.
 
+You can check out [a demo here](https://jsfiddle.net/o4cc8cnd/2/).
+
 ### Usage
 This IS going to change! But for now it can be used like this:
 
@@ -35,4 +37,4 @@ Tagbox accepts Github pull requests. Be sure to write a
   - Create a feature branch (`git checkout -b my-feature`)
   - Commit your changes (`git commit`)
   - Push to your feature branch (`git push origin my-feature`)
-  - Create new Github pull request
+  - Create new pull request
