@@ -20,40 +20,40 @@ var tagbox = {
      * @var preset array An optional list of tags to be pre-defined
      * @var strict bool An option to set the sole use of pre-defined tags
      */
-    target    : null,
-    tagIndex  : 0,
-    inputName : "tags",
-    preset    : [],
-    strict    : false,
+    target: null,
+    tagIndex: 0,
+    inputName: "tags",
+    preset: [],
+    strict: false,
 
-    inputDefaults : {
-        id       : "tagbox-content-area",
-        width    : "100%",
-        height   : "37px",
-        cssFloat : "left",
-        border   : "thin solid #c9c9c9",
-        padding  : "4px",
-        outline  : "0px solid transparent"
+    inputDefaults: {
+        id: "tagbox-content-area",
+        width: "100%",
+        height: "37px",
+        cssFloat: "left",
+        border: "thin solid #c9c9c9",
+        padding: "4px",
+        outline: "0px solid transparent"
     },
 
-    outputDefaults : {
-        id       : "tagbox-content-output",
-        position : "relative",
-        width    : "100%",
-        cssFloat : "left"
+    outputDefaults: {
+        id: "tagbox-content-output",
+        position: "relative",
+        width: "100%",
+        cssFloat: "left"
     },
 
-    tagDefaults : {
-        id           : "tagbox-tag-" + this.tagIndex,
-        display      : "inline",
-        height       : "30px",
-        cssFloat     : "left",
-        margin       : "3px",
-        padding      : "4px",
-        border       : "thin solid #CBD8F2",
-        borderRadius : "5px",
-        background   : "#DEE7F7",
-        color        : "#666666"
+    tagDefaults: {
+        id: "tagbox-tag-" + this.tagIndex,
+        display: "inline",
+        height: "30px",
+        cssFloat: "left",
+        margin: "3px",
+        padding: "4px",
+        border: "thin solid #CBD8F2",
+        borderRadius: "5px",
+        background: "#DEE7F7",
+        color: "#666666"
     },
 
 
@@ -66,7 +66,7 @@ var tagbox = {
      *
      * @return null
      */
-    init : function(e) {
+    init: function(e) {
         this.target = document.getElementById(e);
         if (this.target !== null) {
             this.createOutputArea();
@@ -85,12 +85,12 @@ var tagbox = {
      *
      * @return null
      */
-    createOutputArea : function() {
+    createOutputArea: function() {
         var output = document.createElement("div");
 
-        output.id             = this.outputDefaults.id;
+        output.id = this.outputDefaults.id;
         output.style.position = this.outputDefaults.position;
-        output.style.width    = this.outputDefaults.width;
+        output.style.width = this.outputDefaults.width;
         output.style.cssFloat = this.outputDefaults.cssFloat;
 
         this.target.appendChild(output);
@@ -105,20 +105,20 @@ var tagbox = {
      *
      * @return null
      */
-    createInputArea : function() {
+    createInputArea: function() {
         var input = document.createElement("div");
 
         input.contentEditable = true;
 
-        input.id             = this.inputDefaults.id;
-        input.style.width    = this.inputDefaults.width;
-        input.style.height   = this.inputDefaults.height;
+        input.id = this.inputDefaults.id;
+        input.style.width = this.inputDefaults.width;
+        input.style.height = this.inputDefaults.height;
         input.style.cssFloat = this.inputDefaults.cssFloat;
-        input.style.border   = this.inputDefaults.border;
-        input.style.padding  = this.inputDefaults.padding;
-        input.style.outline  = this.inputDefaults.outline;     
+        input.style.border = this.inputDefaults.border;
+        input.style.padding = this.inputDefaults.padding;
+        input.style.outline = this.inputDefaults.outline;
 
-        input.addEventListener('keydown', function (e) {
+        input.addEventListener('keydown', function(e) {
             tagbox.detectKeyPress(e);
         });
 
@@ -136,7 +136,7 @@ var tagbox = {
      *
      * @return null
      */
-    detectKeyPress : function(e) {
+    detectKeyPress: function(e) {
         if (e.which == 9 || e.which == 13 || e.which == 188) {
             e.preventDefault();
             this.appendTag();
@@ -150,27 +150,27 @@ var tagbox = {
      *
      * @return null
      */
-    appendTag : function() {
+    appendTag: function() {
         var contentArea = document.getElementById("tagbox-content-area");
-        var word        = contentArea.textContent;
+        var word = contentArea.textContent;
 
         contentArea.textContent = "";
 
         var output = document.getElementById("tagbox-content-output");
 
         var tag = document.createElement("div");
-            tag.id                 = this.tagDefaults.id;
-            tag.style.display      = this.tagDefaults.display;
-            tag.style.height       = this.tagDefaults.height;
-            tag.style.cssFloat     = this.tagDefaults.cssFloat;
-            tag.style.margin       = this.tagDefaults.margin;
-            tag.style.padding      = this.tagDefaults.padding;
-            tag.style.border       = this.tagDefaults.border;
-            tag.style.borderRadius = this.tagDefaults.borderRadius;
-            tag.style.background   = this.tagDefaults.background;
-            tag.style.color        = this.tagDefaults.color;
+        tag.id = this.tagDefaults.id;
+        tag.style.display = this.tagDefaults.display;
+        tag.style.height = this.tagDefaults.height;
+        tag.style.cssFloat = this.tagDefaults.cssFloat;
+        tag.style.margin = this.tagDefaults.margin;
+        tag.style.padding = this.tagDefaults.padding;
+        tag.style.border = this.tagDefaults.border;
+        tag.style.borderRadius = this.tagDefaults.borderRadius;
+        tag.style.background = this.tagDefaults.background;
+        tag.style.color = this.tagDefaults.color;
 
-            tag.innerHTML = word;
+        tag.innerHTML = word;
 
         output.appendChild(tag);
         this.createHiddenInput(word);
@@ -185,11 +185,11 @@ var tagbox = {
      *
      * @return null
      */
-    createHiddenInput : function(tag) {
+    createHiddenInput: function(tag) {
         var inputValue = document.createElement("input");
-            inputValue.type  = "hidden";
-            inputValue.name  = this.inputName + "[" + this.tagIndex + "]";
-            inputValue.value = tag;
+        inputValue.type = "hidden";
+        inputValue.name = this.inputName + "[" + this.tagIndex + "]";
+        inputValue.value = tag;
 
         this.target.appendChild(inputValue);
         this.tagIndex++;

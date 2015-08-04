@@ -1,0 +1,7 @@
+{
+	"indentChar": " ",
+	"indentSize": 4,
+	"breakChainedMethods": false,
+    "keepArrayIndentation": false,
+    "keepFunctionIndentation": false
+}
