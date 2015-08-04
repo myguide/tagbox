@@ -15,7 +15,7 @@ You can check out [a demo here](https://jsfiddle.net/o4cc8cnd/2/).
 $ bower install tagbox
 ```
 
-Or add to your `bower.json` - `"tagbox" : "~0.0.2"`
+Or add `"tagbox" : "~0.0.2"` to your bower.json file.
 
 ### Usage
 This IS going to change! But for now it can be used like this:
