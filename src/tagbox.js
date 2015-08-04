@@ -152,28 +152,46 @@ var tagbox = {
      */
     appendTag : function() {
         var contentArea = document.getElementById("tagbox-content-area");
-        var word        = contentArea.textContent;
+        var content        = contentArea.textContent;
 
-        contentArea.textContent = "";
+        if (this.validateTagContent(content) == true) {
+            contentArea.textContent = "";
 
-        var output = document.getElementById("tagbox-content-output");
+            var output = document.getElementById("tagbox-content-output");
 
-        var tag = document.createElement("div");
-            tag.id                 = this.tagDefaults.id;
-            tag.style.display      = this.tagDefaults.display;
-            tag.style.height       = this.tagDefaults.height;
-            tag.style.cssFloat     = this.tagDefaults.cssFloat;
-            tag.style.margin       = this.tagDefaults.margin;
-            tag.style.padding      = this.tagDefaults.padding;
-            tag.style.border       = this.tagDefaults.border;
-            tag.style.borderRadius = this.tagDefaults.borderRadius;
-            tag.style.background   = this.tagDefaults.background;
-            tag.style.color        = this.tagDefaults.color;
+            var tag = document.createElement("div");
+                tag.id                 = this.tagDefaults.id;
+                tag.style.display      = this.tagDefaults.display;
+                tag.style.height       = this.tagDefaults.height;
+                tag.style.cssFloat     = this.tagDefaults.cssFloat;
+                tag.style.margin       = this.tagDefaults.margin;
+                tag.style.padding      = this.tagDefaults.padding;
+                tag.style.border       = this.tagDefaults.border;
+                tag.style.borderRadius = this.tagDefaults.borderRadius;
+                tag.style.background   = this.tagDefaults.background;
+                tag.style.color        = this.tagDefaults.color;
 
-            tag.innerHTML = word;
+                tag.innerHTML = content.trim();
 
-        output.appendChild(tag);
-        this.createHiddenInput(word);
+            output.appendChild(tag);
+            this.createHiddenInput(content);
+        }
+    },
+
+    /**
+     * validateTagContent makes sure that empty spaces and
+     * otherwise blank tags are not added.
+     *
+     * @param content string The tag content
+     *
+     * @return bool
+     */
+    validateTagContent : function(content) {
+        var noSpace = content.trim();
+        if (noSpace != "") {
+            return true;
+        }
+        return false;
     },
 
     /**
