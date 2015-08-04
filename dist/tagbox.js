@@ -27,6 +27,19 @@ var tagbox = {
     preset: [],
     strict: false,
 
+    /**
+     * - Theme related code
+     *
+     * A default theme is set for each of the three kinds of elements tagbox
+     * creates. This is for the input div, the initial input seen on load of
+     * tagbox which is editable.
+     *
+     * The second element is the output area. This is the div where the tags
+     * are put. Initially this is hidden as there are no tags to show.
+     * 
+     * The last kind of element is the tag itself. Multiple tags are generated
+     * via the input area and can then be seen in the output div.
+     */
     inputDefaults: {
         id: "tagbox-content-area",
         width: "100%",
@@ -50,7 +63,6 @@ var tagbox = {
     },
 
     tagDefaults: {
-        //id           : "tagbox-tag-" + this.tagIndex,
         display: "inline",
         height: "18px",
         cssFloat: "left",

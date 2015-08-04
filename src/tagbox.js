@@ -12,7 +12,8 @@
 // For the full copyright and license information, please view the LICENSE
 // file that was distributed with this source code.
 
-var tagbox = {
+var tagbox =
+{
     /**
      * @var target null Target element for the tag dialog
      * @var tagIndex int The index count for each tag
@@ -27,7 +28,21 @@ var tagbox = {
     preset    : [],
     strict    : false,
 
-    inputDefaults : {
+    /**
+     * - Theme related code
+     *
+     * A default theme is set for each of the three kinds of elements tagbox
+     * creates. This is for the input div, the initial input seen on load of
+     * tagbox which is editable.
+     *
+     * The second element is the output area. This is the div where the tags
+     * are put. Initially this is hidden as there are no tags to show.
+     * 
+     * The last kind of element is the tag itself. Multiple tags are generated
+     * via the input area and can then be seen in the output div.
+     */
+    inputDefaults :
+    {
         id         : "tagbox-content-area",
         width      : "100%",
         height     : "24px",
@@ -39,7 +54,8 @@ var tagbox = {
         fontFamily : "Helvetica"
     },
 
-    outputDefaults : {
+    outputDefaults :
+    {
         id           : "tagbox-content-output",
         position     : "relative",
         width        : "100%",
@@ -49,8 +65,8 @@ var tagbox = {
         borderBottom : "none"
     },
 
-    tagDefaults : {
-        //id           : "tagbox-tag-" + this.tagIndex,
+    tagDefaults :
+    {
         display      : "inline",
         height       : "18px",
         cssFloat     : "left",
@@ -74,7 +90,8 @@ var tagbox = {
      *
      * @return null
      */
-    init : function(e) {
+    init : function(e)
+    {
         this.target = document.getElementById(e);
         if (this.target !== null) {
             this.createOutputArea();
@@ -93,7 +110,8 @@ var tagbox = {
      *
      * @return null
      */
-    createOutputArea : function() {
+    createOutputArea : function()
+    {
         var output = document.createElement("div");
 
         output.id                 = this.outputDefaults.id;
@@ -116,7 +134,8 @@ var tagbox = {
      *
      * @return null
      */
-    createInputArea : function() {
+    createInputArea : function()
+    {
         var input = document.createElement("div");
 
         input.contentEditable = true;
@@ -150,7 +169,8 @@ var tagbox = {
      *
      * @return null
      */
-    detectKeyPress : function(e) {
+    detectKeyPress : function(e)
+    {
         if (e.which == 9 || e.which == 13 || e.which == 188) {
             e.preventDefault();
             this.appendTag();
@@ -164,7 +184,8 @@ var tagbox = {
      *
      * @return null
      */
-    appendTag : function() {
+    appendTag : function()
+    {
         var contentArea = document.getElementById("tagbox-content-area");
         var content        = contentArea.textContent;
 
@@ -211,7 +232,8 @@ var tagbox = {
      *
      * @return bool
      */
-    validateTagContent : function(content) {
+    validateTagContent : function(content)
+    {
         var noSpace = content.trim();
         if (noSpace !== "") {
             return true;
@@ -228,7 +250,8 @@ var tagbox = {
      *
      * @return null
      */
-    removeTag : function(e) {
+    removeTag : function(e)
+    {
         if (e.target.parentNode) {
             e.target.parentNode.removeChild(e.target);
         }
@@ -258,7 +281,8 @@ var tagbox = {
      *
      * @return null
      */
-    createHiddenInput : function(tag) {
+    createHiddenInput : function(tag)
+    {
         var inputValue = document.createElement("input");
             inputValue.type  = "hidden";
             inputValue.name  = this.inputName + "[" + this.tagIndex + "]";
