@@ -136,7 +136,6 @@ var tagbox =
                     break;
             }
         }
-        console.log(this.defaultTheme);
     },
 
     /**
