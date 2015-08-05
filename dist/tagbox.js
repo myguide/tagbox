@@ -74,7 +74,7 @@ var tagbox = {
         cssFloat: "left",
         margin: "3px",
         padding: "4px",
-        border: "thin solid #CBD8F2",
+        border: "thin solid #cbd8f2",
         borderRadius: "5px",
         background: "#DEE7F7",
         color: "#444444",
@@ -133,6 +133,7 @@ var tagbox = {
     createOutputArea: function() {
         var output = document.createElement("div");
         output.id = "tagbox-content-output";
+        output.className = "tagbox-output";
 
         this.applyStylesFromObject(output, this.outputStyle);
         this.outputElement = output;
@@ -156,6 +157,8 @@ var tagbox = {
         input.addEventListener('keydown', function(e) {
             tagbox.detectKeyPress(e);
         });
+
+        input.className = "tagbox-input";
 
         this.applyStylesFromObject(input, this.inputStyle);
         this.inputElement = input;
@@ -202,6 +205,8 @@ var tagbox = {
             tag.addEventListener("click", function(e) {
                 tagbox.removeTag(e);
             });
+
+            tag.className = "tagbox-tag";
 
             this.applyStylesFromObject(tag, this.tagStyle);
             this.outputElement.appendChild(tag);
