@@ -1,4 +1,4 @@
-// tagbox v0.0.1-dev
+// tagbox v0.0.3
 //
 // (c) myguide.io 2015
 //

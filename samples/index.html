@@ -2,16 +2,18 @@
 <html>
     <head>
         <title>Tagbox by myguide.io samples</title>
+        <style>
+            .row {
+                width: 200px;
+            }
+        </style>
     </head>
     <body>
-        <!--
-            Just one line of HTML. Create your div and assign a unique
-            id then simply pass that through to the tagbox.init method
-            call to begin
-        -->
-        <div id="my-tag-box"></div>
+        <div class="row">
+            <div id="my-tag-box"></div>
+        </div>
 
-        <script type="text/javascript" src="../src/tagbox.js"></script>
+        <script type="text/javascript" src="../dist/tagbox.js"></script>
         <script type="text/javascript">
             // Basic usage
             tagbox.init("my-tag-box");

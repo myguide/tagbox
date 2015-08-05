@@ -1,6 +1,6 @@
 # Tagbox
 
-Tag box is a small component (~3.2K minified) with zero dependencies
+Tag box is a small component (~2.9K minified) with zero dependencies
 that allows you to create "tag like" inputs for your forms. This is
 still in the very VERY early stages of development, so I would not
 recommend using it just yet.
@@ -15,7 +15,7 @@ You can check out [a demo here](https://jsfiddle.net/o4cc8cnd/2/).
 $ bower install tagbox
 ```
 
-Or add `"tagbox" : "~0.0.2"` to your bower.json file.
+Or add `"tagbox" : "~0.0.3"` to your bower.json file.
 
 ### Usage
 This IS going to change! But for now it can be used like this:
@@ -23,6 +23,8 @@ This IS going to change! But for now it can be used like this:
 ```javascript
 tagbox.init('my-div');
 ```
+`my-div` being the id of the div where you'd like the input
+to be created.
 
 Tagbox comes with a default theme that doesn't require you to add / include
 any CSS to your project. These can easily be overridden using either Javascript
@@ -56,10 +58,7 @@ tagbox.init('my-div', {
 });
 ```
 
-Regular CSS will now work well with Tagbox once the default has been disabled.
-
-`my-div` being the id of the div where you'd like the input
-to be created.
+Regular CSS will now work with Tagbox.
 
 ### Building
 
