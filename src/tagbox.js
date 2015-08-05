@@ -28,6 +28,10 @@ var tagbox =
     preset    : [],
     strict    : false,
 
+    inputElement : null,
+    outputElement : null,
+    tagElement : null,
+
     /**
      * - Theme related code
      *
@@ -43,7 +47,6 @@ var tagbox =
      */
     inputDefaults :
     {
-        id         : "tagbox-content-area",
         width      : "100%",
         height     : "24px",
         cssFloat   : "left",
@@ -57,8 +60,6 @@ var tagbox =
 
     outputDefaults :
     {
-        id           : "tagbox-content-output",
-        position     : "relative",
         width        : "100%",
         cssFloat     : "left",
         padding      : "4px",
@@ -69,7 +70,6 @@ var tagbox =
 
     tagDefaults :
     {
-        display      : "inline",
         height       : "18px",
         cssFloat     : "left",
         margin       : "3px",
@@ -79,7 +79,8 @@ var tagbox =
         background   : "#DEE7F7",
         color        : "#444444",
         fontFamily   : "Helvetica",
-        fontWeight   : "lighter"
+        fontWeight   : "lighter",
+        cursor       : "pointer"
     },
 
 
@@ -101,6 +102,13 @@ var tagbox =
         }
     },
 
+    applyStylesFromObject : function(element, object)
+    {
+        for (var attr in object) {
+            element.style[attr] = object[attr];
+        }
+    },
+
     /**
      * createOutputArea creates a new div element with some
      * default options and appends this to the initial
@@ -115,17 +123,11 @@ var tagbox =
     createOutputArea : function()
     {
         var output = document.createElement("div");
+            output.id = "tagbox-content-output";
 
-        output.id                 = this.outputDefaults.id;
-        output.style.position     = this.outputDefaults.position;
-        output.style.width        = this.outputDefaults.width;
-        output.style.cssFloat     = this.outputDefaults.cssFloat;
-        output.style.padding      = this.outputDefaults.padding;
-        output.style.border       = this.outputDefaults.border;
-        output.style.borderBottom = this.outputDefaults.borderBottom;
-        output.style.display      = this.outputDefaults.display;
-
-        this.target.appendChild(output);
+        this.applyStylesFromObject(output, this.outputDefaults);
+        this.outputElement = output;
+        this.target.appendChild(this.outputElement);
     },
 
     /**
@@ -140,25 +142,16 @@ var tagbox =
     createInputArea : function()
     {
         var input = document.createElement("div");
+            input.id = "tagbox-content-area";
+            input.contentEditable = true;
 
-        input.contentEditable = true;
+            input.addEventListener('keydown', function (e) {
+                tagbox.detectKeyPress(e);
+            });
 
-        input.id               = this.inputDefaults.id;
-        input.style.width      = this.inputDefaults.width;
-        input.style.height     = this.inputDefaults.height;
-        input.style.cssFloat   = this.inputDefaults.cssFloat;
-        input.style.border     = this.inputDefaults.border;
-        input.style.padding    = this.inputDefaults.padding;
-        input.style.paddingTop = this.inputDefaults.paddingTop;
-        input.style.outline    = this.inputDefaults.outline;
-        input.style.color      = this.inputDefaults.color;
-        input.style.fontFamily = this.inputDefaults.fontFamily;  
-
-        input.addEventListener('keydown', function (e) {
-            tagbox.detectKeyPress(e);
-        });
-
-        this.target.appendChild(input);
+        this.applyStylesFromObject(input, this.inputDefaults);
+        this.inputElement = input;
+        this.target.appendChild(this.inputElement);
     },
 
     /**
@@ -189,40 +182,26 @@ var tagbox =
      */
     appendTag : function()
     {
-        var contentArea = document.getElementById("tagbox-content-area");
-        var content        = contentArea.textContent;
+        var content = this.inputElement.textContent;
 
         if (this.validateTagContent(content) === true) {
-            contentArea.textContent = "";
+            this.inputElement.textContent = "";
 
-            var output = document.getElementById("tagbox-content-output");
-
-            if (output.style.display == "none") {
-                output.style.display = "block";
+            if (this.outputElement.style.display == "none") {
+                this.outputElement.style.display = "block";
             }
 
             var tag = document.createElement("div");
                 tag.id                 = "tagbox-tag-" + this.tagIndex;
-                tag.style.display      = this.tagDefaults.display;
-                tag.style.height       = this.tagDefaults.height;
-                tag.style.cssFloat     = this.tagDefaults.cssFloat;
-                tag.style.margin       = this.tagDefaults.margin;
-                tag.style.padding      = this.tagDefaults.padding;
-                tag.style.border       = this.tagDefaults.border;
-                tag.style.borderRadius = this.tagDefaults.borderRadius;
-                tag.style.background   = this.tagDefaults.background;
-                tag.style.color        = this.tagDefaults.color;
-                tag.style.fontFamily   = this.tagDefaults.fontFamily;
-                tag.style.fontWeight   = this.tagDefaults.fontWeight;
-                tag.style.cursor       = "pointer";
-
                 tag.innerHTML = content.trim();
 
                 tag.addEventListener("click", function(e) {
                     tagbox.removeTag(e);
                 });
 
-            output.appendChild(tag);
+            this.applyStylesFromObject(tag, this.tagDefaults);
+            this.tagElement = tag;
+            this.outputElement.appendChild(this.tagElement);
             this.createHiddenInput(content);
         }
     },
