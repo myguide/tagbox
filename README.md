@@ -21,8 +21,42 @@ Or add `"tagbox" : "~0.0.2"` to your bower.json file.
 This IS going to change! But for now it can be used like this:
 
 ```javascript
-	tagbox.init("my-div");
+tagbox.init('my-div');
 ```
+
+Tagbox comes with a default theme that doesn't require you to add / include
+any CSS to your project. These can easily be overridden using either Javascript
+or CSS. i.e.
+
+```javascript
+tagbox.init('my-div', {
+	tag: {
+		borderRadius: "10px",
+		fontWeight: "normal"
+	},
+	input: {
+		background: "#ff0000",
+	},
+	output: {
+		// some more styles here etc...
+	}
+});
+```
+
+This will simply allow you to modify what is already there and you can use
+anything that works inline with the `element.style.<somthing>` API in Javascript.
+
+Alternatively, you can disable all of these and use your own CSS. The
+[default.css](https://github.com/myguide/tagbox/blob/master/default.css) file can
+be used as a template for this if needed:
+
+```javascript
+tagbox.init('my-div', {
+	defaultTheme: false
+});
+```
+
+Regular CSS will now work well with Tagbox once the default has been disabled.
 
 `my-div` being the id of the div where you'd like the input
 to be created.
