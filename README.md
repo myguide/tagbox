@@ -5,7 +5,7 @@ that allows you to create "tag like" inputs for your forms. This is
 still in the very VERY early stages of development, so I would not
 recommend using it just yet.
 
-You can check out [a demo here](https://jsfiddle.net/o4cc8cnd/2/).
+You can check out [a demo here](https://jsfiddle.net/o4cc8cnd/3/).
 
 ![tagbox](https://raw.githubusercontent.com/myguide/tagbox/master/images/demo.png)
 
