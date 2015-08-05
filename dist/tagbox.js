@@ -14,19 +14,24 @@
 
 var tagbox = {
     /**
-     * @var target null Target element for the tag dialog
-     * @var tagIndex int The index count for each tag
+     * - Public properties
+     *
      * @var inputName string the default set of input names for tags
      * @var preset array An optional list of tags to be pre-defined
      * @var strict bool An option to set the sole use of pre-defined tags
      */
-    target: null,
-    tagIndex: 0,
-    tagCount: 0,
     inputName: "tags",
     preset: [],
     strict: false,
     defaultTheme: true,
+
+    /**
+     * @var target null Target element for the tag dialog
+     * @var tagIndex int The index count for each tag
+     */
+    target: null,
+    tagIndex: 0,
+    tagCount: 0,
 
     /**
      * @var inputElement null The element where tag name are put
@@ -93,12 +98,41 @@ var tagbox = {
      *
      * @return null
      */
-    init: function(e) {
+    init: function(e, options) {
+        if (typeof options !== 'undefined') {
+            this.applyOptions(options);
+        }
         this.target = document.getElementById(e);
         if (this.target !== null) {
             this.createOutputArea();
             this.createInputArea();
         }
+    },
+
+    applyOptions: function(options) {
+        for (var optionType in options) {
+            switch (optionType) {
+                case "tag":
+                    for (var tagAttr in options.tag) {
+                        this.tagStyle[tagAttr] = options.tag[tagAttr];
+                    }
+                    break;
+                case "input":
+                    for (var inputAttr in options.input) {
+                        this.inputStyle[inputAttr] = options.input[inputAttr];
+                    }
+                    break;
+                case "output":
+                    for (var outputAttr in options.output) {
+                        this.outputStyle[outputAttr] = options.output[outputAttr];
+                    }
+                    break;
+                default:
+                    this[optionType] = options[optionType];
+                    break;
+            }
+        }
+        console.log(this.defaultTheme);
     },
 
     /**
