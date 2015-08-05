@@ -1,0 +1,61 @@
+/**
+ * tagbox v0.0.1-dev
+ *
+ * (c) myguide.io 2015
+ *
+ * @package tagbox
+ * @version 0.0.1-dev
+ *
+ * @author Harry Lawrence <http://github.com/hazbo>
+ *
+ * License: MIT
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * These are the default styles that are used with the theme that comes
+ * with Tagbox. By default, they are applied within the Javascript and
+ * can be modified using the Javascript API. However, if you'd prefer
+ * to do all the styling in CSS, you can disable the default theme in
+ * the Tagbox options. i.e.
+ *
+ * tagbox.init('my-div', {
+ *     defaultTheme: false   
+ * });
+ *
+ * You may then apply these styles using CSS instead.
+ */
+ .tagbox-tag {
+    height: 18px;
+    float: left;
+    margin: 3px;
+    padding: 4px;
+    border: thin solid #cbd8f2;
+    border-radius: 5px;
+    background: #dee7f7;
+    color: #444444;
+    font-family: "Helvetica";
+    font-weight: lighter;
+    cursor: pointer;
+ }
+
+ .tagbox-input {
+    width: 100%;
+    height: 24px;
+    float: left;
+    border: thin solid #c9c9c9;
+    padding: 4px;
+    padding-top: 10px;
+    outline: 0px solid transparent;
+    color: #444444;
+    font-family: "Helvetica"
+ }
+
+ .tagbox-output {
+    width: 100%;
+    float: left;
+    padding: 4px;
+    border: thin solid #c9c9c9;
+    border-bottom: none;
+    display: none;
+ }

@@ -303,9 +303,7 @@ var tagbox =
      */
     showOutputArea : function()
     {
-        if (this.outputElement.style.display == "none") {
-            this.outputElement.style.display = "block";
-        }
+        this.outputElement.style.display = "block";
     },
 
     /**
