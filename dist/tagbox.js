@@ -26,10 +26,14 @@ var tagbox = {
     inputName: "tags",
     preset: [],
     strict: false,
+    defaultTheme: true,
 
+    /**
+     * @var inputElement null The element where tag name are put
+     * @var outputElement null The element where tags appear
+     */
     inputElement: null,
     outputElement: null,
-    tagElement: null,
 
     /**
      * - Theme related code
@@ -44,7 +48,7 @@ var tagbox = {
      * The last kind of element is the tag itself. Multiple tags are generated
      * via the input area and can then be seen in the output div.
      */
-    inputDefaults: {
+    inputStyle: {
         width: "100%",
         height: "24px",
         cssFloat: "left",
@@ -56,7 +60,7 @@ var tagbox = {
         fontFamily: "Helvetica"
     },
 
-    outputDefaults: {
+    outputStyle: {
         width: "100%",
         cssFloat: "left",
         padding: "4px",
@@ -65,7 +69,7 @@ var tagbox = {
         display: "none"
     },
 
-    tagDefaults: {
+    tagStyle: {
         height: "18px",
         cssFloat: "left",
         margin: "3px",
@@ -97,9 +101,21 @@ var tagbox = {
         }
     },
 
+    /**
+     * applyStylesFromObject loops through the styles created in
+     * the theme objects towards the top of the file and applys
+     * those styles to the given element passed.
+     *
+     * @param element The element to apply styles to
+     * @param object The object to get the style data from
+     *
+     * @return null
+     */
     applyStylesFromObject: function(element, object) {
-        for (var attr in object) {
-            element.style[attr] = object[attr];
+        if (this.defaultTheme === true) {
+            for (var attr in object) {
+                element.style[attr] = object[attr];
+            }
         }
     },
 
@@ -118,7 +134,7 @@ var tagbox = {
         var output = document.createElement("div");
         output.id = "tagbox-content-output";
 
-        this.applyStylesFromObject(output, this.outputDefaults);
+        this.applyStylesFromObject(output, this.outputStyle);
         this.outputElement = output;
         this.target.appendChild(this.outputElement);
     },
@@ -141,7 +157,7 @@ var tagbox = {
             tagbox.detectKeyPress(e);
         });
 
-        this.applyStylesFromObject(input, this.inputDefaults);
+        this.applyStylesFromObject(input, this.inputStyle);
         this.inputElement = input;
         this.target.appendChild(this.inputElement);
     },
@@ -177,9 +193,7 @@ var tagbox = {
         if (this.validateTagContent(content) === true) {
             this.inputElement.textContent = "";
 
-            if (this.outputElement.style.display == "none") {
-                this.outputElement.style.display = "block";
-            }
+            this.showOutputArea();
 
             var tag = document.createElement("div");
             tag.id = "tagbox-tag-" + this.tagIndex;
@@ -189,9 +203,8 @@ var tagbox = {
                 tagbox.removeTag(e);
             });
 
-            this.applyStylesFromObject(tag, this.tagDefaults);
-            this.tagElement = tag;
-            this.outputElement.appendChild(this.tagElement);
+            this.applyStylesFromObject(tag, this.tagStyle);
+            this.outputElement.appendChild(tag);
             this.createHiddenInput(content);
         }
     },
@@ -222,23 +235,38 @@ var tagbox = {
      * @return null
      */
     removeTag: function(e) {
-        if (e.target.parentNode) {
-            e.target.parentNode.removeChild(e.target);
-        }
+        var tagInput = document.getElementById(
+            "tagbox-input-" + e.target.id.replace("tagbox-tag-", "")
+        );
 
-        var tagId = e.target.id.replace("tagbox-tag-", "");
-        var tagInput = document.getElementById("tagbox-input-" + tagId);
-        if (tagInput.parentNode) {
-            tagInput.parentNode.removeChild(tagInput);
-        }
+        e.target.parentNode.removeChild(e.target);
+        tagInput.parentNode.removeChild(tagInput);
 
         this.tagCount--;
+        this.hideOutputArea();
+    },
 
-        // TODO: This shoud be seperated from this method
+    /**
+     * showOutputArea shows the area where tags appear once at least the
+     * first tag has been created.
+     *
+     * @return null
+     */
+    showOutputArea: function() {
+        if (this.outputElement.style.display == "none") {
+            this.outputElement.style.display = "block";
+        }
+    },
+
+    /**
+     * hideOutputArea hides the area where tags are shown if there are
+     * no tags to show
+     *
+     * @return null
+     */
+    hideOutputArea: function() {
         if (this.tagCount === 0) {
-            // TODO: Stop getting this from getByElementId
-            var output = document.getElementById("tagbox-content-output");
-            output.style.display = "none";
+            this.outputElement.style.display = "none";
         }
     },
 
