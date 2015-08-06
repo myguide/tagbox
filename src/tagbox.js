@@ -41,6 +41,8 @@ var tagbox =
     inputElement  : null,
     outputElement : null,
 
+    tagSearchResults : [],
+
     /**
      * - Theme related code
      *
@@ -198,6 +200,10 @@ var tagbox =
                 tagbox.detectKeyPress(e);
             });
 
+            input.addEventListener('keyup', function (e) {
+                tagbox.searchPresets();
+            });
+
             input.className = "tagbox-input";
 
         this.applyStylesFromObject(input, this.inputStyle);
@@ -339,5 +345,32 @@ var tagbox =
         this.target.appendChild(inputValue);
         this.tagIndex++;
         this.tagCount++;
+    },
+
+    searchPresets : function()
+    {
+        var text   = this.inputElement.textContent;
+        var index  = --text.length;
+        var tag    = 0;
+
+        if (this.tagSearchResults.length === 0 && text.length === 1) {
+            if (this.validateTagContent(text) === true) {
+                for (tag in this.preset) {
+                    if (this.preset[tag][0] === text[0]) {
+                        this.tagSearchResults.push(this.preset[tag]);
+                    }
+                }
+            }
+        } else {
+            if (index < 0) {
+                this.tagSearchResults = [];
+            }
+            for (tag in this.tagSearchResults) {
+                if (this.tagSearchResults[tag][index] !== text[index]) {
+                    this.tagSearchResults.splice(tag, 1);
+                }
+            }
+        }
     }
 };
+
