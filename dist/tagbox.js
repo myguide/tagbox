@@ -39,8 +39,10 @@ var tagbox = {
      */
     inputElement: null,
     outputElement: null,
+    searchResultsElement: null,
 
     tagSearchResults: [],
+    searchTraverseIndex: null,
 
     /**
      * - Theme related code
@@ -90,6 +92,25 @@ var tagbox = {
         cursor: "pointer"
     },
 
+    searchResultsStyle: {
+        width: "100%",
+        cssFloat: "left",
+        border: "thin solid #c9c9c9",
+        padding: "4px",
+        borderTop: "none",
+        display: "none"
+    },
+
+    resultStyle: {
+        height: "18px",
+        width: "100%",
+        cssFloat: "left",
+        marginBottom: "3px",
+        marginTop: "3px",
+        color: "#444444",
+        fontFamily: "Helvetica",
+        cursor: "pointer"
+    },
 
     /**
      * init starts off the process by creating the needed
@@ -108,6 +129,7 @@ var tagbox = {
         if (this.target !== null) {
             this.createOutputArea();
             this.createInputArea();
+            this.createSearchResultsArea();
         }
     },
 
@@ -195,6 +217,7 @@ var tagbox = {
 
         input.addEventListener('keyup', function(e) {
             tagbox.searchPresets();
+            tagbox.displaySearchResults();
         });
 
         input.className = "tagbox-input";
@@ -202,6 +225,15 @@ var tagbox = {
         this.applyStylesFromObject(input, this.inputStyle);
         this.inputElement = input;
         this.target.appendChild(this.inputElement);
+    },
+
+    createSearchResultsArea: function() {
+        var searchResults = document.createElement("div");
+        searchResults.id = "tagbox-search-results";
+
+        this.applyStylesFromObject(searchResults, this.searchResultsStyle);
+        this.searchResultsElement = searchResults;
+        this.target.appendChild(this.searchResultsElement);
     },
 
     /**
@@ -219,6 +251,10 @@ var tagbox = {
         if (e.which == 9 || e.which == 13 || e.which == 188) {
             e.preventDefault();
             this.appendTag();
+        }
+        if (e.which == 40 || e.which == 38) {
+            e.preventDefault();
+            this.traverseThroughResults(e.which);
         }
     },
 
@@ -333,28 +369,84 @@ var tagbox = {
         this.tagCount++;
     },
 
+    /**
+     * searchPresets loops through the given presets to find anything that
+     * matches what is typed into the input area.
+     *
+     * @return null
+     */
     searchPresets: function() {
+        this.tagSearchResults = [];
         var text = this.inputElement.textContent;
-        var index = --text.length;
-        var tag = 0;
+        var regex = new RegExp("^" + text + ".*");
+        for (i = 0; i < this.preset.length; i++) {
+            if (regex.test(this.preset[i])) {
+                this.tagSearchResults.push(this.preset[i]);
+            }
+        }
+        if (text === "") {
+            this.tagSearchResults = [];
+            this.searchResultsElement.style.display = "none";
+        }
+    },
 
-        if (this.tagSearchResults.length === 0 && text.length === 1) {
-            if (this.validateTagContent(text) === true) {
-                for (tag in this.preset) {
-                    if (this.preset[tag][0] === text[0]) {
-                        this.tagSearchResults.push(this.preset[tag]);
-                    }
+    /**
+     * displaySearchResults creates a new element per result that is found
+     * from the searchPresets call. The div is then added to its parent
+     * element along with each other search result.
+     *
+     * @return null
+     */
+    displaySearchResults: function() {
+        this.searchResultsElement.innerHTML = "";
+        if (this.tagSearchResults.length > 0) {
+            for (var tag in this.tagSearchResults) {
+                var result = document.createElement("div");
+                result.textContent = this.tagSearchResults[tag];
+                result.id = "tagbox-result-" + tag;
+                this.applyStylesFromObject(result, this.resultStyle);
+                this.searchResultsElement.appendChild(result);
+                this.searchResultsElement.style.display = "block";
+            }
+        }
+    },
+
+    /**
+     * traverseThroughResults verifies the key press to detect if the user is
+     * traversing up the list of results, or down. An index is set initially.
+     * If the index is null, there is no result selected. Any other value
+     * represents the fact that one of the search results is selected.
+     *
+     * @param keypress int The unique id of the key that was pressed
+     */
+    traverseThroughResults: function(keypress) {
+        if (keypress == 40) {
+            if (this.searchTraverseIndex === null) {
+                this.searchTraverseIndex = 0;
+            } else if (this.searchTraverseIndex < this.tagSearchResults.length - 1) {
+                this.searchTraverseIndex++;
+            }
+        }
+        if (keypress == 38) {
+            if (this.searchTraverseIndex !== null && this.searchTraverseIndex >= 0) {
+                this.searchTraverseIndex--;
+                if (this.searchTraverseIndex == -1) {
+                    this.searchTraverseIndex = null;
                 }
             }
-        } else {
-            if (index < 0) {
-                this.tagSearchResults = [];
-            }
-            for (tag in this.tagSearchResults) {
-                if (this.tagSearchResults[tag][index] !== text[index]) {
-                    this.tagSearchResults.splice(tag, 1);
-                }
-            }
+        }
+        this.highlightSearchResult();
+    },
+
+    /**
+     * highlightSearchResult adds an active class to the result that has been selected
+     * 
+     * @return null
+     */
+    highlightSearchResult: function() {
+        var result = document.getElementById("tagbox-result-" + this.searchTraverseIndex);
+        if (result !== null) {
+            result.className = "tagbox-active";
         }
     }
 };
