@@ -226,7 +226,7 @@ var tagbox =
 
             input.addEventListener('keyup', function (e) {
                 tagbox.searchPresets();
-                tagbox.displaySearchResults();
+                tagbox.displaySearchResults(e);
             });
 
             input.className = "tagbox-input";
@@ -262,10 +262,6 @@ var tagbox =
         if (e.which == 9 || e.which == 13 || e.which == 188) {
             e.preventDefault();
             this.appendTag();
-        }
-        if (e.which == 40 || e.which == 38) {
-            e.preventDefault();
-            this.traverseThroughResults(e.which);
         }
     },
 
@@ -415,7 +411,7 @@ var tagbox =
      *
      * @return null
      */
-    displaySearchResults : function()
+    displaySearchResults : function(e)
     {
         this.searchResultsElement.innerHTML = "";
         if (this.tagSearchResults.length > 0) {
@@ -427,6 +423,10 @@ var tagbox =
                 this.searchResultsElement.appendChild(result);
                 this.searchResultsElement.style.display = "block";
             }
+        }
+        if (e.which == 40 || e.which == 38) {
+            e.preventDefault();
+            this.traverseThroughResults(e.which);
         }
     },
 
