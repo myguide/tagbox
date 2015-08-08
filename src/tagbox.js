@@ -44,6 +44,7 @@ var tagbox =
 
     tagSearchResults : [],
     searchTraverseIndex : null,
+    selectedResult: null,
 
     /**
      * - Theme related code
@@ -109,12 +110,14 @@ var tagbox =
     resultStyle :
     {
         height       : "18px",
-        width        : "100%",
+        width        : "98%",
         cssFloat     : "left",
         marginBottom : "3px",
         marginTop    : "3px",
+        padding      : "3px",
         color        : "#444444",
         fontFamily   : "Helvetica",
+        fontWeight   : "lighter",
         cursor       : "pointer"
     },
 
@@ -275,6 +278,9 @@ var tagbox =
     appendTag : function()
     {
         var content = this.inputElement.textContent;
+        if (this.selectedResult !== null) {
+            content = this.selectedResult;
+        }
 
         if (this.validateTagContent(content) === true) {
             this.inputElement.textContent = "";
@@ -294,6 +300,7 @@ var tagbox =
             this.applyStylesFromObject(tag, this.tagStyle);
             this.outputElement.appendChild(tag);
             this.createHiddenInput(content);
+            this.searchTraverseIndex = null;
         }
     },
 
@@ -401,6 +408,7 @@ var tagbox =
         if (text === "") {
             this.tagSearchResults = [];
             this.searchResultsElement.style.display = "none";
+            this.searchTraverseIndex = null;
         }
     },
 
@@ -468,6 +476,7 @@ var tagbox =
         var result = document.getElementById("tagbox-result-" + this.searchTraverseIndex);
         if (result !== null) {
             result.className = "tagbox-active";
+            this.selectedResult = result.textContent;
         }
     }
 };
