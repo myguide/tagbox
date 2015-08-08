@@ -1,6 +1,6 @@
 # Tagbox
 
-Tag box is a small component (~2.9K minified) with zero dependencies
+Tag box is a small component (~5.1K minified) with zero dependencies
 that allows you to create "tag like" inputs for your forms. This is
 still in the very VERY early stages of development, so I would not
 recommend using it just yet.
