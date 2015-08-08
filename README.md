@@ -5,7 +5,7 @@ that allows you to create "tag like" inputs for your forms. This is
 still in the very VERY early stages of development, so I would not
 recommend using it just yet.
 
-You can check out [a demo here](https://jsfiddle.net/o4cc8cnd/3/).
+You can check out [a demo here](https://jsfiddle.net/o4cc8cnd/4/).
 
 ![tagbox](https://raw.githubusercontent.com/myguide/tagbox/master/images/demo.png)
 
@@ -15,7 +15,7 @@ You can check out [a demo here](https://jsfiddle.net/o4cc8cnd/3/).
 $ bower install tagbox
 ```
 
-Or add `"tagbox" : "~0.0.3"` to your bower.json file.
+Or add `"tagbox" : "~0.0.4"` to your bower.json file.
 
 ### Usage
 This IS going to change! But for now it can be used like this:
