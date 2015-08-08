@@ -1,3 +1,17 @@
+// tagbox v0.0.4
+//
+// (c) myguide.io 2015
+//
+// @package tagbox
+// @version 0.0.4
+//
+// @author Harry Lawrence <http://github.com/hazbo>
+//
+// License: MIT
+//
+// For the full copyright and license information, please view the LICENSE
+// file that was distributed with this source code.
+
 var gulp = require('gulp'),
     uglify = require("gulp-uglify"),
     rename = require('gulp-rename'),

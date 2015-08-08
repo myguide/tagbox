@@ -1,9 +1,9 @@
-// tagbox v0.0.3
+// tagbox v0.0.4
 //
 // (c) myguide.io 2015
 //
 // @package tagbox
-// @version 0.0.1-dev
+// @version 0.0.4
 //
 // @author Harry Lawrence <http://github.com/hazbo>
 //
@@ -243,7 +243,7 @@ var tagbox =
     {
         var searchResults = document.createElement("div");
             searchResults.id = "tagbox-search-results";
-
+            searchResults.className = "tagbox-search-results";
         this.applyStylesFromObject(searchResults, this.searchResultsStyle);
         this.searchResultsElement = searchResults;
         this.target.appendChild(this.searchResultsElement);
@@ -427,6 +427,7 @@ var tagbox =
                 var result = document.createElement("div");
                 result.textContent = this.tagSearchResults[tag];
                 result.id = "tagbox-result-" + tag;
+                result.className = "tagbox-result";
                 this.applyStylesFromObject(result, this.resultStyle);
                 this.searchResultsElement.appendChild(result);
                 this.searchResultsElement.style.display = "block";
@@ -475,7 +476,7 @@ var tagbox =
     {
         var result = document.getElementById("tagbox-result-" + this.searchTraverseIndex);
         if (result !== null) {
-            result.className = "tagbox-active";
+            result.className = "tagbox-result tagbox-active";
             this.selectedResult = result.textContent;
         }
     }
