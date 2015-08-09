@@ -1,9 +1,9 @@
-// tagbox v0.0.4
+// tagbox v0.0.5
 //
 // (c) myguide.io 2015
 //
 // @package tagbox
-// @version 0.0.4
+// @version 0.0.5
 //
 // @author Harry Lawrence <http://github.com/hazbo>
 //
