@@ -115,6 +115,11 @@ var tagbox = {
         cursor: "pointer"
     },
 
+    resultActiveStyle: {
+        background: "#cbd8f2",
+        borderRadius: "2px"
+    },
+
     /**
      * init starts off the process by creating the needed
      * elements which in turn have their needed event handlers
@@ -456,6 +461,7 @@ var tagbox = {
         var result = document.getElementById("tagbox-result-" + this.searchTraverseIndex);
         if (result !== null) {
             result.className = "tagbox-result tagbox-active";
+            this.applyStylesFromObject(result, this.resultActiveStyle);
             this.selectedResult = result.textContent;
         }
     }
