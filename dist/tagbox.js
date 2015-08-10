@@ -414,6 +414,11 @@ var tagbox = {
                 result.textContent = this.tagSearchResults[tag];
                 result.id = "tagbox-result-" + tag;
                 result.className = "tagbox-result";
+
+                result.addEventListener("click", function(e) {
+                    tagbox.clickSearchResult(e);
+                });
+
                 this.applyStylesFromObject(result, this.resultStyle);
                 this.searchResultsElement.appendChild(result);
                 this.searchResultsElement.style.display = "block";
@@ -464,5 +469,21 @@ var tagbox = {
             this.applyStylesFromObject(result, this.resultActiveStyle);
             this.selectedResult = result.textContent;
         }
+    },
+
+    /**
+     * clickSearchResult allows a tag to be appended when a user clicks one of the listed
+     * results as appose to traversing up or down the list.
+     *
+     * @param e The click event
+     *
+     * @return null
+     */
+    clickSearchResult: function(e) {
+        this.selectedResult = e.target.textContent;
+        this.appendTag();
+        this.tagSearchResults = [];
+        this.searchResultsElement.style.display = "none";
+        this.searchTraverseIndex = null;
     }
 };
