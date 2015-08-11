@@ -294,6 +294,7 @@ var tagbox = {
             this.outputElement.appendChild(tag);
             this.createHiddenInput(content);
             this.searchTraverseIndex = null;
+            this.selectedResult = null;
         }
     },
 
