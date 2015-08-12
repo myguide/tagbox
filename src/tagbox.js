@@ -287,6 +287,12 @@ var tagbox =
             content = this.selectedResult;
         }
 
+        if (this.strict === true) {
+             if (this.preset.indexOf(content) < 0) {
+                return false;
+             }
+        }
+
         if (this.validateTagContent(content) === true) {
             this.inputElement.textContent = "";
 
