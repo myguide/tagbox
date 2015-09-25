@@ -411,7 +411,7 @@ var tagbox =
     {
         this.tagSearchResults = [];
         var text = this.inputElement.textContent;
-        var regex = new RegExp("." + text + ".*");
+        var regex = new RegExp(".*" + text + ".*");
         for (i = 0; i < this.preset.length; i++) {
             if(regex.test(this.preset[i])) {
                 this.tagSearchResults.push(this.preset[i]);
